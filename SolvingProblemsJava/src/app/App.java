@@ -6,32 +6,6 @@ import java.util.ArrayList;
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello Java");
-
-        //static array
-        /*int[] someArray = new int[5];
-        System.out.println("Size of someArray " + someArray.length);
-        for(int i=0;i<someArray.length;i++) 
-        {
-            someArray[i] = i;
-        }
-        for(int i=0;i<someArray.length;i++) 
-        {
-            System.out.print(someArray[i] + " ");
-        }
-        System.out.println(); */
-
-        //dynamic array
-        /*List<Integer> someVector = new ArrayList<>();
-        for(int i=0;i<5;i++)
-        {
-            someVector.add(i);
-        }
-        someVector.remove(2);
-        for(int i=0;i<someVector.size();i++) {
-            System.out.print(someVector.get(i) + " ");
-        }*/
-
-        //running PivotIndex
         int[] PivotArray = {1,7,3,6,5,6};
         System.out.println(PivotIndex(PivotArray));
         int[] PivotArray2 = {1, 2, 3};
@@ -39,6 +13,7 @@ public class App {
     }
 
     public static int PivotIndex(int[] someIndex) {
+        //faster way
         int sum = 0;
         int rightsum;
         int leftsum;
@@ -55,6 +30,7 @@ public class App {
             }
         }
         return -1;
+
         /*slow way
         int leftValue = 0;
         int rightValue = 0;
@@ -72,5 +48,25 @@ public class App {
             rightValue = 0;
         }
         return -1; */
+    }
+
+    public static int largestNumberTwice(int[] someArray) {
+        int largestNumber = 0;
+        int secondLargestNumber = -1;
+        int largestNumberPosition = -1;
+        for(int i = 0; i < someArray.length; i++) {
+            if(someArray[i] > largestNumber) {
+                secondLargestNumber = largestNumber;
+                largestNumber = someArray[i];
+                largestNumberPosition = i;
+            }
+            if(someArray[i] < largestNumber && someArray[i] > secondLargestNumber) {
+                secondLargestNumber = someArray[i];
+            }
+        }
+        if(largestNumber >= secondLargestNumber*2) {
+            return largestNumberPosition;
+        }
+        return -1;
     }
 }

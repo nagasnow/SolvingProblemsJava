@@ -2,6 +2,7 @@ package app;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -68,5 +69,19 @@ public class App {
             return largestNumberPosition;
         }
         return -1;
+    }
+
+    public static int[] PlusOne(int[] someArray) {
+        for(int i = someArray.length-1; i >= 0; i--) {
+            if(someArray[i] < 9) {
+                someArray[i] = someArray[i] + 1;
+                return someArray;
+            } else {
+                someArray[i] = 0;
+            }
+        }
+        int[] arrayMoreDigits = new int[someArray.length + 1];
+        arrayMoreDigits[0] = 1;
+        return arrayMoreDigits;
     }
 }

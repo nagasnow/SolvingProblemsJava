@@ -39,29 +39,38 @@ public class App {
     }
 
     public static int PivotIndex(int[] someIndex) {
-        int leftIndex = 0;
-        int rightIndex = someIndex.length-1;
-        int leftValue = someIndex[0];
-        leftIndex++;
-        int rightValue = 0;
-        while(true) {
-            if(leftIndex == rightIndex) {
-                if(rightValue == leftValue) {
-                    return leftIndex;
-                } else {
-                    return -1;
-                }
-            }
-
-            if(leftValue < rightValue)
-            {
-                leftValue = leftValue + someIndex[leftIndex];
-                leftIndex++;
-            } else if(rightValue < leftValue) 
-            {
-                rightValue = rightValue + someIndex[rightIndex];
-                rightIndex--;
+        int sum = 0;
+        int rightsum;
+        int leftsum;
+        for(int i = 0; i < someIndex.length; i++) {
+            sum = sum + someIndex[i];
+        }
+        rightsum = sum;
+        leftsum = 0;
+        for(int i = 0; i < someIndex.length; i++) {
+            rightsum = rightsum - someIndex[i];
+            leftsum = sum - someIndex[i] - rightsum;
+            if(rightsum == leftsum) {
+                return i;
             }
         }
+        return -1;
+        /*slow way
+        int leftValue = 0;
+        int rightValue = 0;
+        for(int i = 1; i < someIndex.length; i++) {
+            for(int j = 0; j < i; j++) {
+                leftValue = leftValue + someIndex[j];
+            }
+            for(int k = i+1; k<someIndex.length; k++) {
+                rightValue = rightValue + someIndex[k];
+            }
+            if(leftValue == rightValue) {
+                return i;
+            }
+            leftValue = 0;
+            rightValue = 0;
+        }
+        return -1; */
     }
 }

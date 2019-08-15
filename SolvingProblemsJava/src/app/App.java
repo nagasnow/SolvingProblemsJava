@@ -1,8 +1,5 @@
 package app;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.lang.Math;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -83,5 +80,52 @@ public class App {
         int[] arrayMoreDigits = new int[someArray.length + 1];
         arrayMoreDigits[0] = 1;
         return arrayMoreDigits;
+    }
+
+    public static int[] findDiagonalOrder(int[][] someMatrix) {
+        int x = 0;
+        int y = 0;
+        boolean upDirection = true;
+        boolean edge = true;
+        int[] orderValues = new int[someMatrix.length*someMatrix[0].length];
+        int orderPosition = 0;
+        if(orderValues.length != 0) {
+            orderValues[orderPosition] = someMatrix[x][y];
+            orderPosition++;
+        }
+        while(orderPosition < orderValues.length) {
+            if(x == someMatrix.length-1 && edge == true) {
+                y++;
+                upDirection = true;
+                edge = false;
+            } else if(y == someMatrix[0].length-1 && edge == true) {
+                x++;
+                upDirection = false;
+                edge = false;
+            } else if(x == 0 && edge == true) {
+                y++;
+                upDirection = false;
+                edge = false;
+            } else if(y == 0 && edge == true) {
+                x++;
+                upDirection = true;
+                edge = false;
+            } else if(upDirection) {
+                x--;
+                y++;
+                if(x==0 || y==0 || x == someMatrix.length-1 || y == someMatrix[0].length-1) {
+                    edge = true;
+                }
+            } else if(!upDirection) {
+                x++;
+                y--;
+                if(x==0 || y==0 || x == someMatrix.length-1 || y == someMatrix[0].length-1) {
+                    edge = true;
+                }
+            }
+            orderValues[orderPosition] = someMatrix[x][y];
+            orderPosition++;
+        }
+        return orderValues;
     }
 }

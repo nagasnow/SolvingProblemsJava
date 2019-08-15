@@ -1,5 +1,7 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -8,6 +10,7 @@ public class App {
         System.out.println(PivotIndex(PivotArray));
         int[] PivotArray2 = {1, 2, 3};
         System.out.println(PivotIndex(PivotArray2));
+        int[][] spiralMatrix = {{1,2,3},{4,5,6},{7,8,9}};
     }
 
     public static int PivotIndex(int[] someIndex) {
@@ -124,5 +127,121 @@ public class App {
             orderPosition++;
         }
         return orderValues;
+    }
+
+    public List<Integer> spiralOrder(int[][] someMatrix) {
+        List<Integer> results = new ArrayList<>();
+        
+        if(someMatrix.length == 0) {
+            return results;
+        }
+        
+        if(someMatrix.length == 1) {
+            for(int i = 0; i < someMatrix[0].length; i++) {
+                results.add(someMatrix[0][i]);
+            }
+            return results;
+        }
+        
+        if(someMatrix[0].length == 1) {
+            for(int i = 0; i < someMatrix.length; i++) {
+                results.add(someMatrix[i][0]);
+            }
+            return results;
+        }
+        
+        int x = 0;
+        int y = 0;
+        boolean reachedEdge = false;
+        int direction = 0; //0 right, 1 down, 2 left, 3 up
+        int countElements = 0;
+        int totalElements = someMatrix.length*someMatrix[0].length;
+        boolean[][] trackedCoordinates = new boolean[someMatrix.length][someMatrix[0].length];
+        results.add(someMatrix[x][y]);
+        trackedCoordinates[x][y] = true;
+        countElements++;
+        
+        while(countElements < totalElements) {
+            if(!reachedEdge) {
+                switch (direction) {
+                    case 0:
+                        y++;
+                        break;
+                    case 1:
+                        x++;
+                        break;
+                    case 2:
+                        y--;
+                        break;
+                    case 3:
+                        x--;
+                        break;
+                }
+            } else if(reachedEdge) {
+                switch (direction) {
+                    case 0:
+                        x++;
+                        direction = 1;
+                        break;
+                    case 1:
+                        y--;
+                        direction = 2;
+                        break;
+                    case 2:
+                        x--;
+                        direction = 3;
+                        break;
+                    case 3:
+                        y++;
+                        direction = 0;
+                        break;
+                }
+            }
+            results.add(someMatrix[x][y]);
+            trackedCoordinates[x][y] = true;
+            countElements++;
+            
+            if(x == someMatrix.length-1 && direction == 1) {
+                reachedEdge = true;
+            } else if(x == 0 && direction == 3) {
+                reachedEdge = true;
+            } else if(y == someMatrix[0].length-1 && direction == 0) {
+                reachedEdge = true;
+            } else if(y == 0 && direction == 2) {
+                reachedEdge = true;
+            } else {
+                switch (direction) {
+                case 0:
+                    if(trackedCoordinates[x][y+1]) {
+                        reachedEdge = true;
+                    } else {
+                        reachedEdge = false;
+                    }
+                    break;
+                case 1:
+                    if(trackedCoordinates[x+1][y]) {
+                        reachedEdge = true;
+                    } else {
+                        reachedEdge = false;
+                    }
+                    break;
+                case 2:
+                    if(trackedCoordinates[x][y-1]) {
+                        reachedEdge = true;
+                    } else {
+                        reachedEdge = false;
+                    }
+                    break;
+                case 3:
+                    if(trackedCoordinates[x-1][y]) {
+                        reachedEdge = true;
+                    } else {
+                        reachedEdge = false;
+                    }
+                    break;
+                }
+            }
+        }
+        return results;
     }
 }

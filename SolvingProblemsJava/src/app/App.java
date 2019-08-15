@@ -28,24 +28,6 @@ public class App {
             }
         }
         return -1;
-
-        /*slow way
-        int leftValue = 0;
-        int rightValue = 0;
-        for(int i = 1; i < someIndex.length; i++) {
-            for(int j = 0; j < i; j++) {
-                leftValue = leftValue + someIndex[j];
-            }
-            for(int k = i+1; k<someIndex.length; k++) {
-                rightValue = rightValue + someIndex[k];
-            }
-            if(leftValue == rightValue) {
-                return i;
-            }
-            leftValue = 0;
-            rightValue = 0;
-        }
-        return -1; */
     }
 
     public static int largestNumberTwice(int[] someArray) {
@@ -87,12 +69,27 @@ public class App {
         int y = 0;
         boolean upDirection = true;
         boolean edge = true;
+        
+        if(someMatrix.length == 0) {
+            return new int[0];
+        }
+        
+        if(someMatrix.length == 1) {
+            return someMatrix[0];
+        }
+        
+        if(someMatrix[0].length == 1) {
+            int[] resultMatrix = new int[someMatrix.length];
+            for(int i = 0; i < someMatrix.length; i++) {
+                resultMatrix[i] = someMatrix[i][0];
+            }
+            return resultMatrix;
+        }
+        
         int[] orderValues = new int[someMatrix.length*someMatrix[0].length];
         int orderPosition = 0;
-        if(orderValues.length != 0) {
-            orderValues[orderPosition] = someMatrix[x][y];
-            orderPosition++;
-        }
+        orderValues[orderPosition] = someMatrix[x][y];
+        orderPosition++;
         while(orderPosition < orderValues.length) {
             if(x == someMatrix.length-1 && edge == true) {
                 y++;

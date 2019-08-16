@@ -289,4 +289,68 @@ public class App {
         }
         return results;
     }
+
+    public String addBinary(String a, String b) {
+        char[] stringa = a.toCharArray();
+        char[] stringb = b.toCharArray();
+        if(stringa.length > stringb.length || stringa.length == stringb.length) {
+            return calculation(stringa,stringb);
+        } else if(stringb.length > stringa.length) {
+            return calculation(stringb,stringa);
+        }
+        return "";
+    }
+    
+    public String calculation(char[] stringa, char[] stringb) {
+        StringBuilder result = new StringBuilder();
+        int smallerStringPosition;
+        boolean carry1 = false;
+        smallerStringPosition = stringb.length-1;
+            for(int i = stringa.length-1; i>=0; i--) {
+                if(!carry1) {
+                    if(smallerStringPosition < 0) {
+                        result.insert(0,stringa[i]);
+                    } else if(stringa[i] == stringb[smallerStringPosition] && stringa[i] == '0') {
+                        //0
+                        result.insert(0,"0");
+                        carry1 = false;
+                    } else if(stringa[i] == stringb[smallerStringPosition] && stringa[i] == '1') {
+                        //0
+                        result.insert(0,"0");
+                        carry1 = true;
+                    } else if(stringa[i] != stringb[smallerStringPosition]) {
+                        //1
+                        result.insert(0,"1");
+                        carry1 = false;
+                    }
+                } else if(carry1) {
+                    if(smallerStringPosition < 0) {
+                        if(stringa[i] == '0') {
+                            result.insert(0,"1");
+                            carry1 = false;
+                        } else if (stringa[i] == '1') {
+                            result.insert(0,"0");
+                            carry1 = true;
+                        }
+                    } else if(stringa[i] == stringb[smallerStringPosition] && stringa[i] == '0') {
+                        //0
+                        result.insert(0,"1");
+                        carry1 = false;
+                    } else if(stringa[i] == stringb[smallerStringPosition] && stringa[i] == '1') {
+                        //0
+                        result.insert(0,"1");
+                        carry1 = true;
+                    } else if(stringa[i] != stringb[smallerStringPosition]) {
+                        //1
+                        result.insert(0,"0");
+                        carry1 = true;
+                    }
+                }
+                smallerStringPosition--;
+            }
+            if(carry1) {
+                result.insert(0,"1");
+            }
+        return result.toString();
+    }
 }

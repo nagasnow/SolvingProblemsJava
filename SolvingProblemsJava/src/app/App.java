@@ -244,4 +244,49 @@ public class App {
         }
         return results;
     }
+
+    public List<List<Integer>> pascalTriangle(int numRows) {
+        List<List<Integer>> results = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        
+        if(numRows==0) {
+            return results;
+        }
+        
+        if(numRows==1) {
+            temp.add(1);
+            results.add(temp);
+            return results;
+        }
+        
+        if(numRows==2) {
+            temp.add(1);
+            results.add(temp);
+            temp = new ArrayList<>();
+            temp.add(1);
+            temp.add(1);
+            results.add(temp);
+            return results;
+        }
+        
+        temp.add(1);
+        results.add(temp);
+        temp = new ArrayList<>();
+        temp.add(1);
+        temp.add(1);
+        results.add(temp);
+        temp = new ArrayList<>();
+        int counter = 2;
+        while(counter < numRows) {
+            temp.add(1);
+            for(int i = 1; i < results.get(counter-1).size(); i++) {
+                temp.add(results.get(counter-1).get(i) + results.get(counter-1).get(i-1));
+            }
+            temp.add(1);
+            results.add(temp);
+            temp = new ArrayList<>();
+            counter++;
+        }
+        return results;
+    }
 }

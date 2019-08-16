@@ -353,4 +353,45 @@ public class App {
             }
         return result.toString();
     }
+
+    public int strStr(String haystack, String needle) {
+        char[] haystackChar = haystack.toCharArray();
+        char[] needleChar = needle.toCharArray();
+        int needleCount = 0;
+        int index = 0;
+        boolean found = false;
+        
+        if(needleChar.length == 0) {
+            return index;
+        }
+        
+        if(haystackChar.length < needleChar.length)  {
+            return -1;
+        }
+        
+        for(int i = 0; i <= haystackChar.length - needleChar.length; i++) {
+            if(haystackChar[i] == needleChar[needleCount]) {
+                index = i;
+                while(needleCount <= needleChar.length-1) {
+                    if(haystackChar[i+needleCount] == needleChar[needleCount]) {
+                        if(needleCount == needleChar.length-1) {
+                            found = true;
+                            needleCount++;
+                        } else {
+                            needleCount++;
+                        }
+
+                    } else {
+                        needleCount = 0;
+                        break;
+                    }
+                }
+                if(found) {
+                    return index;
+                }
+            }
+            index = -1;
+        }
+        return index;
+    }
 }
